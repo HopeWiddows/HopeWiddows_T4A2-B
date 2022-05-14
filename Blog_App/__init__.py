@@ -16,6 +16,3 @@ login_manager.login_message_category = 'info'
 
 from Blog_App import routes
 
-#enabling live debug mode/conditional within project
-if __name__ == '__main__':
-    app.run(debug=True)

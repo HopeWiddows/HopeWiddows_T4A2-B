@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 from flask import render_template, url_for, flash, redirect
-from blog_app import app
-from blog_app.forms import RegForm, LoginForm #importing form data from forms.py
-from blog_app.models import User, Post 
+from Blog_App import app
+from Blog_App.forms import RegForm, LoginForm #importing form data from forms.py
+from Blog_App.models import User, Post 
 
 #creating list for blog post data
 posts = [
