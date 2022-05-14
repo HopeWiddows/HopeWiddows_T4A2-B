@@ -1,69 +1,52 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <!--Adding Bootstrap dependencies-->
-         <!-- Required meta tags -->
-         <meta charset="utf-8">
-         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-         <!-- Bootstrap CSS -->
-         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-         <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='main.css')}}">
-         <!--passing in title if provided, default if none provided-->
-         {% if title %}
-            <title>Hope's Blog - {{ title }}</title>
-         {% else %}
-            <title>Hope's Blog</title>
-         {% endif %}
-    </head>
-    <body>
-        <!--Adding navigation bar with bootstrap classes-->
-        <header class="site-header">
-            <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-              <div class="container">
-                <a class="navbar-brand mr-4" href="/">Hope's Blog</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <!--Linking pages to each other on the nav bar-->
-                <div class="collapse navbar-collapse" id="navbarToggle">
-                  <div class="navbar-nav mr-auto">
-                    <a class="nav-item nav-link" href="{{url_for('home')}}">Home</a>
-                    <a class="nav-item nav-link" href="{{url_for('about')}}">About</a>
-                  </div>
-                  <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="{{url_for('login')}}">Login</a>
-                    <a class="nav-item nav-link" href="{{url_for('register')}}">Register</a>
-                  </div>
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }} <!--adding CSRF token to work with SECRET_KEY-->
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log In</legend>
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}
+                    {% endif %}
                 </div>
-              </div>
-            </nav>
-          </header>
-
-        <!--creating block for template inheritance across pages-->
-        <!--Adding Bootstrap classes-->
-        <main role="main" class="container">
-            <div class="row">
-              <div class="col-md-8">
-                {% with messages = get_flashed_messages(with_categories=true) %} <!--displays get_flash messages-->
-                  {% if messages %}
-                    {% for category, message in messages %}
-                      <div class="alert alert-{{ category }}">
-                        {{ message }}
-                      </div>
-                    {% endfor %}
-                  {% endif %}
-                {% endwith %}
-                {% block content %}{% endblock %}
-              </div>
-
-          </main>
-        <!--Adding Bootstrap dependencies-->
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-    </body>
-</html>
+                <div class="form-group">
+                    {{ form.password.label(class="form-control-label") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-check">
+                    {{ form.remember_user(class="form-check-input") }}
+                    {{ form.remember_user.label(class="form-check-label") }}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+            <small class="text-muted ml-2">
+                <a href="#">Forgot Password?</a>
+            </small>
+        </form>
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Need to sign up? <a class="ml-2" href="{{ url_for('register') }}">Create your account here</a>
+        </small>
+    </div>
+{% endblock content %}
