@@ -1,4 +1,4 @@
-#importing/set up dependencies 
+#importing dependencies/libraries
 from flask import Flask, flask
 
 #defining app function
