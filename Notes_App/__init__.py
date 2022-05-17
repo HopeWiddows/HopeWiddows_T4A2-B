@@ -1,5 +1,5 @@
 #importing dependencies/libraries
-from flask import Flask, flask
+from flask import Flask
 
 #defining app function
 def create_app():
